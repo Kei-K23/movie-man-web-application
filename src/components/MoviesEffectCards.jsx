@@ -1,56 +1,40 @@
-// // Import Swiper React components
-// import { Swiper, SwiperSlide } from "swiper/react";
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+import "swiper/css/effect-cards";
 
-// // Import Swiper styles
-// import "swiper/css";
-// import "swiper/css/effect-cards";
+import { EffectCards } from "swiper/modules";
 
-// // import required modules
-// import { EffectCards } from "swiper/modules";
-// import { useRef, useState } from "react";
+// Your component code
+const MoviesEffectCards = ({ trendingMovies, setCurrentMovieSlide }) => {
+  const handleSlideChange = (e) => {
+    setCurrentMovieSlide(e.activeIndex);
+    console.log(e.activeIndex);
+  };
 
-// const MoviesEffectCards = ({ trendingMovies }) => {
-//   const [isDragging, setIsDragging] = useState(false);
-//   const [offsetX, setOffsetX] = useState(0);
-//   // const [offsetY, setOffsetY] = useState(0);
+  return (
+    <>
+      <Swiper
+        effect={"cards"}
+        grabCursor={true}
+        modules={[EffectCards]}
+        className="mySwiper w-[200px] lg:w-[250px]"
+        onSlideChange={(e) => handleSlideChange(e)}
+      >
+        {trendingMovies &&
+          trendingMovies.map((movie) => (
+            <SwiperSlide
+              key={movie.id}
+              className="w-full h-[300px] lg:h-[370px] rounded-2xl shadow-lg"
+            >
+              <img
+                src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}
+              />
+            </SwiperSlide>
+          ))}
+      </Swiper>
+      ;
+    </>
+  );
+};
 
-//   const onMouseDown = (e) => {
-//     isDragging = true;
-//     offsetX = e.clientX - draggable.getBoundingClientRect().left;
-//     offsetY = e.clientY - draggable.getBoundingClientRect().top;
-
-//     // Add event listeners for mousemove and mouseup on the entire document
-//     document.addEventListener("mousemove", onMouseMove);
-//     document.addEventListener("mouseup", onMouseUp);
-//   };
-
-//   return (
-//     <>
-//       <Swiper
-//         effect={"cards"}
-//         grabCursor={true}
-//         modules={[EffectCards]}
-//         className="mySwiper w-[200px]"
-//       >
-//         {trendingMovies &&
-//           trendingMovies.map((movie) => (
-//             <SwiperSlide key={movie.id} className="w-full h-[300px]">
-//               <img
-//                 onMouseDown={(e) => {
-//                   document.addEventListener("mousemove");
-//                   document.addEventListener("mouseup");
-//                 }}
-//                 onMouseMove={(e) => {
-//                   console.log(e.clientX);
-//                 }}
-//                 // ref={refImg}
-//                 src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}
-//               />
-//             </SwiperSlide>
-//           ))}
-//       </Swiper>
-//     </>
-//   );
-// };
-
-// export default MoviesEffectCards;
+export default MoviesEffectCards;
