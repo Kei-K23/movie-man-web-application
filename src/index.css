@@ -1,0 +1,101 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+@layer components {
+
+  /* swiper style  */
+
+  .swiper {
+    width: 100%;
+    height: 100%;
+  }
+
+  .swiper-slide {
+    text-align: center;
+    font-size: 18px;
+    background: #fff;
+
+    /* Center slide text vertically */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .swiper-slide img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  /* layer effect  */
+  .layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 5;
+  }
+
+  /* padding  */
+  .page-padding {
+    padding: 1rem 1.5rem;
+  }
+
+  /* font family */
+  .font-montserrat {
+    font-family: 'Montserrat', sans-serif;
+  }
+
+  .font-robotoSlab {
+    font-family: 'Roboto Slab', serif;
+  }
+
+  /* border  */
+  .sm-border {
+    @apply border-2 border-black shadow-md
+  }
+
+  .lg-border {
+    @apply border-4 border-black shadow-lg
+  }
+
+  /* responsive break point sm */
+  @media (min-width: 640px) {
+    .page-padding {
+      padding: 1.5rem 3rem;
+    }
+  }
+
+  /* responsive break point md */
+  @media (min-width: 768px) {
+    .page-padding {
+      padding: 1.7rem 3.8rem;
+    }
+  }
+
+  /* responsive break point lg */
+  @media (min-width: 1024px) {
+    .page-padding {
+      padding: 1.7rem 4.3rem;
+    }
+  }
+
+  /* responsive break point xl */
+  @media (min-width: 1280px) {
+    .page-padding {
+      padding: 1.7rem 5.2rem;
+    }
+  }
+
+  /* responsive break point 2xl */
+  @media (min-width: 1536px) {
+    .page-padding {
+      padding: 1.7rem 6rem;
+    }
+  }
+}
