@@ -1,13 +1,15 @@
 import HeroSection from "../sections/HeroSection";
 import MovieTrailerSection from "../sections/MovieTrailerSection";
-import TradingMovieSection from "../sections/TradingMovieSection";
+import TrendingMovieSection from "../sections/TrendingMovieSection";
+import TrendingTVShowsSection from "../sections/TrendingTVShowsSection";
 
 const Home = () => {
   return (
     <>
       <HeroSection />
-      <TradingMovieSection />
+      <TrendingMovieSection />
       <MovieTrailerSection />
+      <TrendingTVShowsSection />
     </>
   );
 };
