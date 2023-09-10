@@ -27,6 +27,14 @@ export const movieAPI = createApi({
       query: (params) =>
         `https://api.themoviedb.org/3/trending/movie/${params.time}?language=en-US`,
     }),
+    getUpcomingMovies: builder.query({
+      query: () =>
+        "https://api.themoviedb.org/3/movie/upcoming?language=en-US&page=1",
+    }),
+    getTopRatedMovies: builder.query({
+      query: () =>
+        "https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=1",
+    }),
     getPopularTvShows: builder.query({
       query: () =>
         "https://api.themoviedb.org/3/tv/popular?language=en-US&page=1",
@@ -46,6 +54,8 @@ export const {
   useLazyGetNowPlayingMoviesQuery,
   useLazyGetPopularMoviesQuery,
   useLazyGetTrendingMoviesQuery,
+  useLazyGetUpcomingMoviesQuery,
+  useLazyGetTopRatedMoviesQuery,
   useLazyGetAirTodayTvShowsQuery,
   useLazyGetPopularTvShowsQuery,
   useLazyGetTrendingTvShowsQuery,
