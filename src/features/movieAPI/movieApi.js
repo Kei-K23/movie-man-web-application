@@ -16,24 +16,24 @@ export const movieAPI = createApi({
 
   endpoints: (builder) => ({
     getPopularMovies: builder.query({
-      query: () =>
-        "https://api.themoviedb.org/3/movie/popular?language=en-US&page=1",
+      query: (params) =>
+        `https://api.themoviedb.org/3/movie/popular?language=en-US&page=${params.page}`,
     }),
     getNowPlayingMovies: builder.query({
-      query: () =>
-        "https://api.themoviedb.org/3/movie/now_playing?language=en-US&page=1",
+      query: (params) =>
+        `https://api.themoviedb.org/3/movie/now_playing?language=en-US&page=${params.page}`,
     }),
     getTrendingMovies: builder.query({
       query: (params) =>
         `https://api.themoviedb.org/3/trending/movie/${params.time}?language=en-US`,
     }),
     getUpcomingMovies: builder.query({
-      query: () =>
-        "https://api.themoviedb.org/3/movie/upcoming?language=en-US&page=1",
+      query: (params) =>
+        `https://api.themoviedb.org/3/movie/upcoming?language=en-US&page=${params.page}`,
     }),
     getTopRatedMovies: builder.query({
-      query: () =>
-        "https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=1",
+      query: (params) =>
+        `https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=${params.page}`,
     }),
     getPopularTvShows: builder.query({
       query: () =>
