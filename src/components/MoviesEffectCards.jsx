@@ -8,7 +8,6 @@ import { EffectCards } from "swiper/modules";
 const MoviesEffectCards = ({ trendingMovies, setCurrentMovieSlide }) => {
   const handleSlideChange = (e) => {
     setCurrentMovieSlide(e.activeIndex);
-    console.log(e.activeIndex);
   };
 
   return (

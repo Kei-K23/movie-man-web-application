@@ -9,6 +9,7 @@ import Card from "./Card";
 // import { useState } from "react";
 
 const SwiperCardSlides = ({ movies }) => {
+  console.log(movies);
   return (
     <>
       <Swiper
@@ -45,9 +46,13 @@ const SwiperCardSlides = ({ movies }) => {
         {movies.map((movie) => (
           <SwiperSlide key={movie.id} className="mb-10">
             <Card
-              title={movie.title}
+              title={movie.media_type === "tv" ? movie.name : movie.title}
               poster_path={movie.poster_path}
-              release_date={movie.release_date}
+              release_date={
+                movie.media_type === "tv"
+                  ? movie.first_air_date
+                  : movie.release_date
+              }
             />
           </SwiperSlide>
         ))}

@@ -21,7 +21,7 @@ const MovieTrailerSection = () => {
     handleRequest();
   }, []);
   return (
-    <section className="max-h-[700px] relative lg:flex lg:justify-between lg:items-center lg:px-20">
+    <section className="min-h-[700px] relative lg:flex lg:justify-between lg:items-center lg:px-20">
       <div className="relative z-20 top-4 ">
         {isFetching ? (
           <p>fetching</p>
