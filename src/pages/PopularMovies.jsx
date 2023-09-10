@@ -8,11 +8,24 @@ const PopularMovies = () => {
     useLazyGetPopularMoviesQuery();
 
   const [popularMovies, setPopularMovies] = useState(null);
+  const [currentPage, setCurrentPage] = useState(2);
 
   const handleRequest = async () => {
-    const { data } = await getPopularMovies();
+    const { data } = await getPopularMovies({
+      page: 1,
+    });
 
     setPopularMovies(data.results);
+  };
+
+  const handleClick = async () => {
+    setCurrentPage(currentPage + 1);
+
+    const { data } = await getPopularMovies({
+      page: currentPage,
+    });
+
+    setPopularMovies([...popularMovies, ...data.results]);
   };
 
   useEffect(() => {
@@ -27,15 +40,18 @@ const PopularMovies = () => {
         ) : error ? (
           <p>Error</p>
         ) : popularMovies && popularMovies ? (
-          <div className="grid gap-8 grid-cols-2 lg:grid-cols-5">
-            {popularMovies.map((popularMovie) => (
-              <Card
-                key={popularMovie.id}
-                poster_path={popularMovie.poster_path}
-                title={popularMovie.title}
-                release_date={popularMovie.release_date}
-              />
-            ))}
+          <div>
+            <div className="grid gap-8 grid-cols-2 lg:grid-cols-5">
+              {popularMovies.map((popularMovie) => (
+                <Card
+                  key={popularMovie.id}
+                  poster_path={popularMovie.poster_path}
+                  title={popularMovie.title}
+                  release_date={popularMovie.release_date}
+                />
+              ))}
+            </div>
+            <button onClick={handleClick}>Load More</button>
           </div>
         ) : (
           <p>No Popular movies yet</p>
