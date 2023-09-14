@@ -36,12 +36,20 @@ export const movieAPI = createApi({
         `https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=${params.page}`,
     }),
     getPopularTvShows: builder.query({
-      query: () =>
-        "https://api.themoviedb.org/3/tv/popular?language=en-US&page=1",
+      query: (params) =>
+        `https://api.themoviedb.org/3/tv/popular?language=en-US&page=${params.page}`,
     }),
     getAirTodayTvShows: builder.query({
-      query: () =>
-        "https://api.themoviedb.org/3/tv/airing_today?language=en-US&page=1",
+      query: (params) =>
+        `https://api.themoviedb.org/3/tv/airing_today?language=en-US&page=${params.page}`,
+    }),
+    getOnTheAirTvShows: builder.query({
+      query: (params) =>
+        `https://api.themoviedb.org/3/tv/on_the_air?language=en-US&page=${params.page}`,
+    }),
+    getTopRatedTvShows: builder.query({
+      query: (params) =>
+        `https://api.themoviedb.org/3/tv/top_rated?language=en-US&page=${params.page}`,
     }),
     getTrendingTvShows: builder.query({
       query: (params) =>
@@ -57,6 +65,8 @@ export const {
   useLazyGetUpcomingMoviesQuery,
   useLazyGetTopRatedMoviesQuery,
   useLazyGetAirTodayTvShowsQuery,
+  useLazyGetOnTheAirTvShowsQuery,
+  useLazyGetTopRatedTvShowsQuery,
   useLazyGetPopularTvShowsQuery,
   useLazyGetTrendingTvShowsQuery,
 } = movieAPI;

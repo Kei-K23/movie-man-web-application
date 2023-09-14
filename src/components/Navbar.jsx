@@ -41,16 +41,24 @@ const Navbar = () => {
               <p className="text-lg font-bold cursor-pointer">TV Shows</p>
               <ul className="hidden  group-hover:block absolute bg-slate-100 shadow-lg min-w-[150px]">
                 <li className="py-1 px-4 hover:text-slate-700 transition-colors hover:bg-slate-300">
-                  <Link className="text-lg font-bold">Movies</Link>
+                  <Link to="/tv/popular" className="text-lg font-bold">
+                    Popular TvShows
+                  </Link>
                 </li>
                 <li className="py-1 px-4 hover:text-slate-700 transition-colors hover:bg-slate-300">
-                  <Link className="text-lg font-bold">Movies</Link>
+                  <Link to="/tv/air_today" className="text-lg font-bold">
+                    Air Today
+                  </Link>
                 </li>
                 <li className="py-1 px-4 hover:text-slate-700 transition-colors hover:bg-slate-300">
-                  <Link className="text-lg font-bold">Movies</Link>
+                  <Link to="/tv/on_air" className="text-lg font-bold">
+                    On Air
+                  </Link>
                 </li>
                 <li className="py-1 px-4 hover:text-slate-700 transition-colors hover:bg-slate-300">
-                  <Link className="text-lg font-bold">Movies</Link>
+                  <Link to="/tv/top_rated" className="text-lg font-bold">
+                    Top Rated
+                  </Link>
                 </li>
               </ul>
             </li>

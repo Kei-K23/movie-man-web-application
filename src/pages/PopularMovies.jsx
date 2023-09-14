@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useLazyGetPopularMoviesQuery } from "../features/movieAPI/movieApi";
 import Card from "../components/Card";
 import Search from "../components/Search";
+import { Link } from "react-router-dom";
 
 const PopularMovies = () => {
   const [getPopularMovies, { error, isFetching }] =
@@ -43,12 +44,13 @@ const PopularMovies = () => {
           <div>
             <div className="grid gap-8 grid-cols-2 lg:grid-cols-5">
               {popularMovies.map((popularMovie) => (
-                <Card
-                  key={popularMovie.id}
-                  poster_path={popularMovie.poster_path}
-                  title={popularMovie.title}
-                  release_date={popularMovie.release_date}
-                />
+                <Link to={`/movie_id/${popularMovie.id}`} key={popularMovie.id}>
+                  <Card
+                    poster_path={popularMovie.poster_path}
+                    title={popularMovie.title}
+                    release_date={popularMovie.release_date}
+                  />
+                </Link>
               ))}
             </div>
             <button onClick={handleClick}>Load More</button>
