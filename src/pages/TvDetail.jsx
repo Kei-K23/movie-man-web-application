@@ -1,15 +1,16 @@
 import { useLoaderData } from "react-router-dom";
-import { getTvDetail } from "../helper";
+import { getDetail } from "../helper";
+
 const TvDetail = () => {
   const { detail } = useLoaderData();
 
-  return <div>{detail}</div>;
+  return <div>{detail.name}</div>;
 };
 
 export default TvDetail;
 
 export async function tvDetailLoader({ params }) {
-  const detail = await getTvDetail(params.id);
+  const detail = await getDetail(params.id);
 
   return { detail };
 }
