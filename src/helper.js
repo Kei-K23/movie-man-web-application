@@ -8,18 +8,18 @@ const options = {
   },
 };
 
-export async function getMovieDetail(id) {
+export async function getDetail(type, id) {
   const req = await fetch(
-    `https://api.themoviedb.org/3/movie/${id}?language=en-US`,
+    `https://api.themoviedb.org/3/${type}/${id}?language=en-US`,
     options
   );
   const data = await req.json();
   return data;
 }
 
-export async function getTvDetail(id) {
+export async function getTrailerVideo(type, id) {
   const req = await fetch(
-    `https://api.themoviedb.org/3/tv/${id}?language=en-US`,
+    `https://api.themoviedb.org/3/${type}/${id}/videos?language=en-US`,
     options
   );
   const data = await req.json();
