@@ -25,3 +25,21 @@ export async function getTrailerVideo(type, id) {
   const data = await req.json();
   return data;
 }
+
+export async function getRecommendations(type, id) {
+  const req = await fetch(
+    `https://api.themoviedb.org/3/${type}/${id}/recommendations?language=en-US`,
+    options
+  );
+  const data = await req.json();
+  return data;
+}
+
+export async function getSimilar(type, id) {
+  const req = await fetch(
+    `https://api.themoviedb.org/3/${type}/${id}/similar?language=en-US`,
+    options
+  );
+  const data = await req.json();
+  return data;
+}
