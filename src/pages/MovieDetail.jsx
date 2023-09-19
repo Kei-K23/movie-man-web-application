@@ -1,18 +1,18 @@
 import { useLoaderData } from "react-router-dom";
-import { getDetail, getTrailerVideo } from "../helper";
+import {
+  getDetail,
+  getRecommendations,
+  getSimilar,
+  getTrailerVideo,
+} from "../helper";
+import SwiperCardSlides from "../components/SwiperCardSlides";
 const Detail = () => {
-  const { detail, trailerVideos } = useLoaderData();
+  const { detail, trailerVideos, recommendations, similar } = useLoaderData();
   const calculateRunTime = (minute) => {
     const hours = Math.floor(minute / 60);
     const remainingMinutes = minute % 60;
     return `${hours}h ${remainingMinutes}m`;
   };
-
-  const handleClick = () => {
-    console.log("click");
-  };
-
-  console.log(detail, trailerVideos);
 
   return (
     <div>
@@ -38,7 +38,7 @@ const Detail = () => {
             <p className="text-xl text-slate-700">{detail.release_date}</p>
             <p>{detail.status}</p>
             <p>$ {detail.budget}</p>
-            <ul className="flex items-center gap-4 my-4">
+            <ul className="flex items-center flex-wrap gap-4 my-4">
               {detail.genres.map((genre) => (
                 <li
                   className="sm-border py-1 px-2 cursor-pointer hover:scale-95 transition-transform"
@@ -59,13 +59,50 @@ const Detail = () => {
           <p className="lg:text-lg">{detail.overview}</p>
         </div>
       </div>
-      <button
-        onClick={handleClick}
-        className="group sm-border m-auto block my-8 px-4 py-2 text-xl font-medium cursor-pointer hover:scale-95 transition-transform"
-      >
-        <i className="fa-solid fa-circle-play group-hover:text-blue-500 transition-colors"></i>{" "}
-        watch trailer
-      </button>
+
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 page-padding">
+        {trailerVideos.results.map((trailer) => (
+          <div key={trailer.id}>
+            <iframe
+              className="w-full h-[300px]"
+              src={`https://www.youtube.com/embed/${trailer.key}`}
+              title="YouTube video player"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowfullscreen
+            ></iframe>
+          </div>
+        ))}
+      </div>
+
+      <section className="page-padding my-10">
+        <div className="flex items-center gap-10 mb-6">
+          <h2 className="text-xl lg:text-2xl font-bold font-robotoSlab">
+            Recommendations
+          </h2>
+        </div>
+        <div>
+          {recommendations.results && recommendations.results.length > 0 ? (
+            <SwiperCardSlides movies={recommendations.results} />
+          ) : (
+            <p>No recommendations movies yet</p>
+          )}
+        </div>
+      </section>
+
+      <section className="page-padding my-10">
+        <div className="flex items-center gap-10 mb-6">
+          <h2 className="text-xl lg:text-2xl font-bold font-robotoSlab">
+            Similar Movies
+          </h2>
+        </div>
+        <div>
+          {similar.results && similar.results.length > 0 ? (
+            <SwiperCardSlides movies={similar.results} />
+          ) : (
+            <p>No similar movies yet</p>
+          )}
+        </div>
+      </section>
     </div>
   );
 };
@@ -75,5 +112,7 @@ export default Detail;
 export async function movieDetailLoader({ params }) {
   const detail = await getDetail("movie", params.id);
   const trailerVideos = await getTrailerVideo("movie", params.id);
-  return { detail, trailerVideos };
+  const recommendations = await getRecommendations("movie", params.id);
+  const similar = await getSimilar("movie", params.id);
+  return { detail, trailerVideos, recommendations, similar };
 }
