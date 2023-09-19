@@ -42,8 +42,6 @@ const TopRatedTvShows = () => {
       page: currentPage,
     });
 
-    console.log(data.results);
-
     setPopularMovies([...popularMovies, ...data.results]);
   };
 
