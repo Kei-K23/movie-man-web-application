@@ -1,20 +1,83 @@
+import { useState } from "react";
+import { replaceSpaceWithPercentSign, search } from "../helper";
+import { Link } from "react-router-dom";
+
 const Search = () => {
+  const [keyword, setKeyword] = useState("");
+  const [results, setResults] = useState([]);
+
+  const handleChange = async (e) => {
+    const w = e.target.value;
+    console.log(w);
+    setKeyword("");
+    setResults([]);
+    if (w === "") {
+      setKeyword("");
+      setResults([]);
+      return;
+    }
+    setKeyword(w);
+    const searchKeyWord = replaceSpaceWithPercentSign(w);
+    const data = await search(searchKeyWord);
+    setResults((prev) => {
+      return [...prev, ...data];
+    });
+  };
+
+  const handleClick = (id) => {
+    console.log(id);
+  };
+
   return (
-    <form className="sm-border lg:h-12 flex justify-between items-center bg-slate-100">
-      <input
-        type="text"
-        placeholder="Search movies, tv shows..."
-        aria-label="search movies, tv shows"
-        className="lg:text-xl p-2 lg:p-4 bg-transparent outline-none peer"
-        required
-      />
-      <button
-        className="lg:text-xl peer-focus:ring-2 peer-focus:ring-sky-600  p-2 w-1/4 h-full bg-blue-400 rounded-l-2xl transition-all hover:w-1/3 hover:bg-blue-500 hover:text-slate-300 active:bg-blue-600"
-        type="submit"
-      >
-        <i className="fa-solid fa-magnifying-glass"></i> search
-      </button>
-    </form>
+    <div>
+      <form className=" sm-border lg:h-12 flex justify-between items-center bg-slate-100">
+        <i className=" fa-solid fa-magnifying-glass ml-3"></i>
+        <input
+          value={keyword}
+          onChange={handleChange}
+          type="text"
+          placeholder="Search movies, tv shows..."
+          aria-label="search movies, tv shows"
+          className="w-full lg:text-xl p-2 lg:p-4 bg-transparent outline-none peer"
+          required
+        />
+      </form>
+      <ul className="w-full max-h-[350px] overflow-auto bg-slate-100 sm-border">
+        {results.map((result) => (
+          <Link
+            to={
+              result.media_type === "tv"
+                ? `/tv_id/${result.id}`
+                : `/movie_id/${result.id}`
+            }
+            key={result.id}
+          >
+            <li
+              className="group transition-all my-4 py-2 px-8 bg-slate-200 hover:bg-sky-500 first:mt-0 last:mb-0 flex items-center gap-8 cursor-pointer"
+              key={result.id}
+              onClick={() => handleClick(result.id)}
+              title="click to view detail"
+            >
+              <div className="overflow-hidden">
+                <img
+                  className="transition-all w-[90px] h-[90px] group-hover:scale-110"
+                  src={`https://image.tmdb.org/t/p/w500/${result.poster_path}`}
+                  alt={result.name ?? result.title}
+                />
+              </div>
+              <div className="flex-1">
+                <h3 className="group-hover:text-slate-200 font-bold text-sm lg:text-lg">
+                  {result.name ?? result.title}
+                </h3>
+                <h3 className="text-slate-700">
+                  {result.release_date ?? result.first_air_date}
+                </h3>
+              </div>
+            </li>
+          </Link>
+        ))}
+      </ul>
+    </div>
   );
 };
 

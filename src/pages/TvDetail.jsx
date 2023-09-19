@@ -16,8 +16,6 @@ const TvDetail = () => {
     return `${hours}h ${remainingMinutes}m`;
   };
 
-  console.log(detail);
-
   return (
     <div>
       <div className="w-full h-[full] lg:h-[500px] relative">

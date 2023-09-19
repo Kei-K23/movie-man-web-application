@@ -10,7 +10,6 @@ import { Link } from "react-router-dom";
 // import { useState } from "react";
 
 const SwiperCardSlides = ({ movies }) => {
-  console.log(movies);
   return (
     <>
       <Swiper
