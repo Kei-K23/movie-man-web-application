@@ -1,26 +1,25 @@
 import { useEffect, useState } from "react";
-import { useLazyGetTrendingTvShowsQuery } from "../features/movieAPI/movieApi";
 import SwitchBtn from "../components/SwitchBtn";
 import SwiperCardSlides from "../components/SwiperCardSlides";
+import { fetchDataFromEndPoints } from "../helper";
+import { END_POINTS } from "../endpoints";
 
-const TrendingTVShowsSection = () => {
-  const [getTrendingMovies, { error, isFetching }] =
-    useLazyGetTrendingTvShowsQuery();
-
+const TrendingTVShowsSection = ({ trendingTvData }) => {
   const [trendingTvShows, setTrendingTvShows] = useState({});
   const [switchTime, setSwitchTime] = useState("day");
 
-  const handleRequest = async () => {
-    const { data } = await getTrendingMovies({
-      time: switchTime,
-    });
+  const handleChange = async (e) => {
+    setSwitchTime(e);
 
+    const data = await fetchDataFromEndPoints(
+      END_POINTS.getTrendingMoviesAndTvShows("tv", e)
+    );
     setTrendingTvShows(data);
   };
 
   useEffect(() => {
-    handleRequest();
-  }, [switchTime]);
+    setTrendingTvShows(trendingTvData);
+  }, []);
 
   return (
     <section className="page-padding my-10">
@@ -28,14 +27,10 @@ const TrendingTVShowsSection = () => {
         <h2 className="text-xl lg:text-2xl font-bold font-robotoSlab">
           Trending TV Shows
         </h2>
-        <SwitchBtn switchTime={switchTime} setSwitchTime={setSwitchTime} />
+        <SwitchBtn switchTime={switchTime} handleChange={handleChange} />
       </div>
       <div>
-        {isFetching ? (
-          <p>fetching</p>
-        ) : error ? (
-          <p>Error</p>
-        ) : trendingTvShows.results ? (
+        {trendingTvShows.results && trendingTvShows.results.length > 0 ? (
           <SwiperCardSlides movies={trendingTvShows.results} />
         ) : (
           <p>No trending movies yet</p>
