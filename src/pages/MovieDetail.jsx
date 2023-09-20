@@ -1,11 +1,7 @@
 import { useLoaderData } from "react-router-dom";
-import {
-  getDetail,
-  getRecommendations,
-  getSimilar,
-  getTrailerVideo,
-} from "../helper";
+import { fetchDataFromEndPoints } from "../helper";
 import SwiperCardSlides from "../components/SwiperCardSlides";
+import { END_POINTS } from "../endpoints";
 const Detail = () => {
   const { detail, trailerVideos, recommendations, similar } = useLoaderData();
   const calculateRunTime = (minute) => {
@@ -110,9 +106,17 @@ const Detail = () => {
 export default Detail;
 
 export async function movieDetailLoader({ params }) {
-  const detail = await getDetail("movie", params.id);
-  const trailerVideos = await getTrailerVideo("movie", params.id);
-  const recommendations = await getRecommendations("movie", params.id);
-  const similar = await getSimilar("movie", params.id);
+  const detail = await fetchDataFromEndPoints(
+    END_POINTS.getDetail("movie", params.id)
+  );
+  const trailerVideos = await fetchDataFromEndPoints(
+    END_POINTS.getTrailerVideo("movie", params.id)
+  );
+  const recommendations = await fetchDataFromEndPoints(
+    END_POINTS.getRecommendations("movie", params.id)
+  );
+  const similar = await fetchDataFromEndPoints(
+    END_POINTS.getSimilar("movie", params.id)
+  );
   return { detail, trailerVideos, recommendations, similar };
 }

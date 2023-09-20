@@ -1,26 +1,25 @@
 import { useEffect, useState } from "react";
-import { useLazyGetTrendingMoviesQuery } from "../features/movieAPI/movieApi";
+
 import SwiperCardSlides from "../components/SwiperCardSlides";
 import SwitchBtn from "../components/SwitchBtn";
+import { fetchDataFromEndPoints } from "../helper";
+import { END_POINTS } from "../endpoints";
 
-const TrendingMovieSection = () => {
-  const [getTrendingMovies, { error, isFetching }] =
-    useLazyGetTrendingMoviesQuery();
-
+const TrendingMovieSection = ({ trendingMoviesData }) => {
   const [trendingMovies, setTrendingMovies] = useState({});
   const [switchTime, setSwitchTime] = useState("day");
 
-  const handleRequest = async () => {
-    const { data } = await getTrendingMovies({
-      time: switchTime,
-    });
-
+  const handleChange = async (e) => {
+    setSwitchTime(e);
+    const data = await fetchDataFromEndPoints(
+      END_POINTS.getTrendingMoviesAndTvShows("movie", e)
+    );
     setTrendingMovies(data);
   };
 
   useEffect(() => {
-    handleRequest();
-  }, [switchTime]);
+    setTrendingMovies(trendingMoviesData);
+  }, []);
 
   return (
     <section className="page-padding my-10">
@@ -28,14 +27,10 @@ const TrendingMovieSection = () => {
         <h2 className="text-xl lg:text-2xl font-bold font-robotoSlab">
           Trending Movies
         </h2>
-        <SwitchBtn switchTime={switchTime} setSwitchTime={setSwitchTime} />
+        <SwitchBtn switchTime={switchTime} handleChange={handleChange} />
       </div>
       <div>
-        {isFetching ? (
-          <p>fetching</p>
-        ) : error ? (
-          <p>Error</p>
-        ) : trendingMovies.results ? (
+        {trendingMovies.results && trendingMovies.results.length > 0 ? (
           <SwiperCardSlides movies={trendingMovies.results} />
         ) : (
           <p>No trending movies yet</p>

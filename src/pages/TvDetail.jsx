@@ -1,14 +1,10 @@
 import { useLoaderData } from "react-router-dom";
-import {
-  getDetail,
-  getRecommendations,
-  getSimilar,
-  getTrailerVideo,
-} from "../helper";
+import { fetchDataFromEndPoints } from "../helper";
 import SwiperCardSlides from "../components/SwiperCardSlides";
+import { END_POINTS } from "../endpoints";
 
 const TvDetail = () => {
-  const { detail, trailerVideos, recommendations, similar } = useLoaderData();
+  const { detail, trailerVideos, recommendations } = useLoaderData();
 
   const calculateRunTime = (minute) => {
     const hours = Math.floor(minute / 60);
@@ -101,21 +97,6 @@ const TvDetail = () => {
           )}
         </div>
       </section>
-
-      <section className="page-padding my-10">
-        <div className="flex items-center gap-10 mb-6">
-          <h2 className="text-xl lg:text-2xl font-bold font-robotoSlab">
-            Similar Movies
-          </h2>
-        </div>
-        <div>
-          {similar.results && similar.results.length > 0 ? (
-            <SwiperCardSlides movies={similar.results} />
-          ) : (
-            <p>No similar movies yet</p>
-          )}
-        </div>
-      </section>
     </div>
   );
 };
@@ -123,9 +104,15 @@ const TvDetail = () => {
 export default TvDetail;
 
 export async function tvDetailLoader({ params }) {
-  const detail = await getDetail("tv", params.id);
-  const trailerVideos = await getTrailerVideo("tv", params.id);
-  const recommendations = await getRecommendations("tv", params.id);
-  const similar = await getSimilar("tv", params.id);
-  return { detail, trailerVideos, recommendations, similar };
+  const detail = await fetchDataFromEndPoints(
+    END_POINTS.getDetail("tv", params.id)
+  );
+  const trailerVideos = await fetchDataFromEndPoints(
+    END_POINTS.getTrailerVideo("tv", params.id)
+  );
+  const recommendations = await fetchDataFromEndPoints(
+    END_POINTS.getRecommendations("tv", params.id)
+  );
+
+  return { detail, trailerVideos, recommendations };
 }

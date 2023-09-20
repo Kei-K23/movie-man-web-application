@@ -1,66 +1,47 @@
 import { useEffect, useState } from "react";
-import { useLazyGetPopularMoviesQuery } from "../features/movieAPI/movieApi";
-import Card from "../components/Card";
 import Search from "../components/Search";
-import { Link } from "react-router-dom";
+import { useLoaderData } from "react-router-dom";
+import { fetchDataFromEndPoints } from "../helper";
+import { END_POINTS } from "../endpoints";
+import ShowAllList from "../components/ShowAllList";
 
 const PopularMovies = () => {
-  const [getPopularMovies, { error, isFetching }] =
-    useLazyGetPopularMoviesQuery();
+  const { data } = useLoaderData();
 
-  const [popularMovies, setPopularMovies] = useState(null);
+  const [results, setResults] = useState([]);
   const [currentPage, setCurrentPage] = useState(2);
 
-  const handleRequest = async () => {
-    const { data } = await getPopularMovies({
-      page: 1,
-    });
-
-    setPopularMovies(data.results);
-  };
-
   const handleClick = async () => {
-    setCurrentPage(currentPage + 1);
+    setCurrentPage((prev) => prev + 1);
 
-    const { data } = await getPopularMovies({
-      page: currentPage,
-    });
+    const data = await fetchDataFromEndPoints(
+      END_POINTS.getDifferentCateMovies("movie", "popular", currentPage)
+    );
 
-    setPopularMovies([...popularMovies, ...data.results]);
+    setResults([...results, ...data.results]);
   };
 
   useEffect(() => {
-    handleRequest();
+    setResults(data.results);
   }, []);
+
   return (
     <div className="page-padding ">
       <Search />
-      <div className="mt-8">
-        {isFetching ? (
-          <p>fetching</p>
-        ) : error ? (
-          <p>Error</p>
-        ) : popularMovies && popularMovies ? (
-          <div>
-            <div className="grid gap-8 grid-cols-2 lg:grid-cols-5">
-              {popularMovies.map((popularMovie) => (
-                <Link to={`/movie_id/${popularMovie.id}`} key={popularMovie.id}>
-                  <Card
-                    poster_path={popularMovie.poster_path}
-                    title={popularMovie.title}
-                    release_date={popularMovie.release_date}
-                  />
-                </Link>
-              ))}
-            </div>
-            <button onClick={handleClick}>Load More</button>
-          </div>
-        ) : (
-          <p>No Popular movies yet</p>
-        )}
-      </div>
+      <ShowAllList
+        results={results}
+        text={"No popular movies yet!"}
+        handleClick={handleClick}
+      />
     </div>
   );
 };
 
 export default PopularMovies;
+
+export async function popularMoviesLoader() {
+  const data = await fetchDataFromEndPoints(
+    END_POINTS.getDifferentCateMovies("movie", "popular", 1)
+  );
+  return { data };
+}
