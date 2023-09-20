@@ -39,7 +39,7 @@ const Navbar = () => {
             </li>
             <li className="group relative  transition-colors">
               <p className="text-lg font-bold cursor-pointer">TV Shows</p>
-              <ul className="hidden  group-hover:block absolute bg-slate-100 shadow-lg min-w-[200px]">
+              <ul className="hidden right-0  group-hover:block absolute bg-slate-100 shadow-lg min-w-[200px]">
                 <li className="py-1 px-4 hover:text-slate-700 transition-colors hover:bg-slate-300">
                   <Link to="/tv/popular" className="text-lg font-bold">
                     Popular TvShows
