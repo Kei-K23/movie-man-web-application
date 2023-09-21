@@ -1,7 +1,7 @@
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import Main from "./Layout/Main";
 import ErrorPage from "./pages/ErrorPage";
-import Home, { homeLoader } from "./pages/Home";
+import Home, { HomeLoader } from "./pages/Home";
 import PopularMovies, { popularMoviesLoader } from "./pages/PopularMovies";
 import NowPlayingMovies, {
   nowPlayingMoviesLoader,
@@ -29,7 +29,7 @@ const router = createBrowserRouter([
       {
         index: true,
         element: <Home />,
-        loader: homeLoader,
+        loader: HomeLoader,
       },
       {
         path: "movie/popular",

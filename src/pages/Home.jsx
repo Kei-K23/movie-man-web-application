@@ -11,6 +11,10 @@ const Home = () => {
 
   return (
     <>
+      {/* <div className={isLoading ? "block" : "hidden"}>
+        <h2 className="text-4xl">Loading</h2>
+      </div> */}
+
       <HeroSection />
       <TrendingMovieSection trendingMoviesData={trendingMoviesData} />
       <MovieTrailerSection trendingMoviesData={trendingMoviesData} />
@@ -21,12 +25,21 @@ const Home = () => {
 
 export default Home;
 
-export async function homeLoader() {
-  const trendingMoviesData = await fetchDataFromEndPoints(
-    END_POINTS.getTrendingMoviesAndTvShows("movie", "day")
-  );
-  const trendingTvData = await fetchDataFromEndPoints(
-    END_POINTS.getTrendingMoviesAndTvShows("tv", "day")
-  );
+export const HomeLoader = async () => {
+  let trendingMoviesData;
+  let trendingTvData;
+
+  try {
+    trendingMoviesData = await fetchDataFromEndPoints(
+      END_POINTS.getTrendingMoviesAndTvShows("movie", "day")
+    );
+    trendingTvData = await fetchDataFromEndPoints(
+      END_POINTS.getTrendingMoviesAndTvShows("tv", "day")
+    );
+  } catch (err) {
+    console.error("error", err.message);
+  } finally {
+    console.error("error");
+  }
   return { trendingMoviesData, trendingTvData };
-}
+};

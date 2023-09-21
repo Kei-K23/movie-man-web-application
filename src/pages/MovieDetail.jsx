@@ -3,13 +3,16 @@ import { fetchDataFromEndPoints } from "../helper";
 import SwiperCardSlides from "../components/SwiperCardSlides";
 import { END_POINTS } from "../endpoints";
 const Detail = () => {
-  const { detail, trailerVideos, recommendations, similar } = useLoaderData();
+  const { detail, trailerVideos, recommendations, similar, credits } =
+    useLoaderData();
   const calculateRunTime = (minute) => {
     const hours = Math.floor(minute / 60);
     const remainingMinutes = minute % 60;
     return `${hours}h ${remainingMinutes}m`;
   };
-
+  let casts = [];
+  casts = credits.cast.length > 19 ? credits.cast.slice(0, 19) : credits.cast;
+  console.log(casts);
   return (
     <div>
       <div className="w-full h-[full] lg:h-[500px] relative">
@@ -55,6 +58,21 @@ const Detail = () => {
           <p className="lg:text-lg">{detail.overview}</p>
         </div>
       </div>
+
+      <section className="page-padding my-10">
+        <div className="flex items-center gap-10 mb-6">
+          <h2 className="text-xl lg:text-2xl font-bold font-robotoSlab">
+            Casts
+          </h2>
+        </div>
+        <div>
+          {credits.cast && credits.cast.length > 0 ? (
+            <SwiperCardSlides movies={casts} />
+          ) : (
+            <p>No casts data to show</p>
+          )}
+        </div>
+      </section>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 page-padding">
         {trailerVideos.results.map((trailer) => (
@@ -118,5 +136,8 @@ export async function movieDetailLoader({ params }) {
   const similar = await fetchDataFromEndPoints(
     END_POINTS.getSimilar("movie", params.id)
   );
-  return { detail, trailerVideos, recommendations, similar };
+  const credits = await fetchDataFromEndPoints(
+    END_POINTS.getCredits("movie", params.id)
+  );
+  return { detail, trailerVideos, recommendations, similar, credits };
 }
