@@ -43,27 +43,49 @@ const SwiperCardSlides = ({ movies }) => {
         modules={[Pagination]}
         className="mySwiper"
       >
-        {movies.map((movie) => (
-          <SwiperSlide key={movie.id} className="mb-10">
-            <Link
-              to={
-                movie.media_type === "tv"
-                  ? `/tv_id/${movie.id}`
-                  : `/movie_id/${movie.id}`
-              }
-            >
-              <Card
-                title={movie.media_type === "tv" ? movie.name : movie.title}
-                poster_path={movie.poster_path}
-                release_date={
-                  movie.media_type === "tv"
-                    ? movie.first_air_date
-                    : movie.release_date
-                }
-              />
-            </Link>
-          </SwiperSlide>
-        ))}
+        {movies.map((movie) => {
+          if (movie.credit_id) {
+            return (
+              <SwiperSlide key={movie.id} className="mb-10">
+                <Card
+                  title={movie.name}
+                  poster_path={movie.profile_path}
+                  release_date={movie.character}
+                />
+              </SwiperSlide>
+            );
+          } else {
+            return (
+              <SwiperSlide key={movie.id} className="mb-10">
+                <Link
+                  to={
+                    movie.media_type === "tv"
+                      ? `/tv_id/${movie.id}`
+                      : `/movie_id/${movie.id}`
+                  }
+                >
+                  <Card
+                    title={
+                      movie.media_type === "tv"
+                        ? movie.name
+                        : movie.title
+                        ? movie.title
+                        : movie.name
+                    }
+                    poster_path={movie.poster_path ?? movie.profile_path}
+                    release_date={
+                      movie.media_type === "tv"
+                        ? movie.first_air_date
+                        : movie.release_date
+                        ? movie.release_date
+                        : movie.character
+                    }
+                  />
+                </Link>
+              </SwiperSlide>
+            );
+          }
+        })}
       </Swiper>
     </>
   );

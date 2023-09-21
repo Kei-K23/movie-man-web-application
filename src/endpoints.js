@@ -17,4 +17,7 @@ export const END_POINTS = {
   getTrendingMoviesAndTvShows(type, time) {
     return `https://api.themoviedb.org/3/trending/${type}/${time}?language=en-US`;
   },
+  getCredits(type, id) {
+    return `https://api.themoviedb.org/3/${type}/${id}/credits?language=en-US`;
+  },
 };

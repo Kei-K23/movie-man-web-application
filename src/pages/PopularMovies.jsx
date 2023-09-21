@@ -40,8 +40,18 @@ const PopularMovies = () => {
 export default PopularMovies;
 
 export async function popularMoviesLoader() {
-  const data = await fetchDataFromEndPoints(
-    END_POINTS.getDifferentCateMovies("movie", "popular", 1)
-  );
-  return { data };
+  let isLoading = false;
+  let data;
+  try {
+    isLoading = true;
+    data = await fetchDataFromEndPoints(
+      END_POINTS.getDifferentCateMovies("movie", "popular", 1)
+    );
+  } catch (e) {
+    console.error(e);
+  } finally {
+    isLoading = false;
+  }
+
+  return { data, isLoading };
 }
