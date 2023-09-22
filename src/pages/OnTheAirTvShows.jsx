@@ -4,7 +4,8 @@ import { useLoaderData } from "react-router-dom";
 import { END_POINTS } from "../endpoints";
 import { fetchDataFromEndPoints } from "../helper";
 import ShowAllList from "../components/ShowAllList";
-
+import { store } from "../app/store.js";
+import { setLoading } from "../features/loading/loadingSlice";
 const OnTheAirTvShows = () => {
   const { data } = useLoaderData();
 
@@ -40,8 +41,18 @@ const OnTheAirTvShows = () => {
 export default OnTheAirTvShows;
 
 export async function onTheAirTvShowsLoader() {
-  const data = await fetchDataFromEndPoints(
-    END_POINTS.getDifferentCateMovies("tv", "on_the_air", 1)
-  );
+  let data;
+  try {
+    store.dispatch(setLoading(true));
+    data = await fetchDataFromEndPoints(
+      END_POINTS.getDifferentCateMovies("tv", "on_the_air", 1)
+    );
+  } catch (e) {
+    store.dispatch(setLoading(true));
+
+    console.error(e);
+  } finally {
+    store.dispatch(setLoading(false));
+  }
   return { data };
 }

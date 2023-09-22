@@ -2,6 +2,8 @@ import { useLoaderData } from "react-router-dom";
 import { fetchDataFromEndPoints } from "../helper";
 import SwiperCardSlides from "../components/SwiperCardSlides";
 import { END_POINTS } from "../endpoints";
+import { store } from "../app/store";
+import { setLoading } from "../features/loading/loadingSlice";
 
 const TvDetail = () => {
   const { detail, trailerVideos, recommendations } = useLoaderData();
@@ -104,15 +106,27 @@ const TvDetail = () => {
 export default TvDetail;
 
 export async function tvDetailLoader({ params }) {
-  const detail = await fetchDataFromEndPoints(
-    END_POINTS.getDetail("tv", params.id)
-  );
-  const trailerVideos = await fetchDataFromEndPoints(
-    END_POINTS.getTrailerVideo("tv", params.id)
-  );
-  const recommendations = await fetchDataFromEndPoints(
-    END_POINTS.getRecommendations("tv", params.id)
-  );
+  let detail, trailerVideos, recommendations;
+
+  try {
+    store.dispatch(setLoading(true));
+
+    detail = await fetchDataFromEndPoints(
+      END_POINTS.getDetail("tv", params.id)
+    );
+    trailerVideos = await fetchDataFromEndPoints(
+      END_POINTS.getTrailerVideo("tv", params.id)
+    );
+    recommendations = await fetchDataFromEndPoints(
+      END_POINTS.getRecommendations("tv", params.id)
+    );
+  } catch (e) {
+    store.dispatch(setLoading(true));
+
+    console.error(e);
+  } finally {
+    store.dispatch(setLoading(false));
+  }
 
   return { detail, trailerVideos, recommendations };
 }

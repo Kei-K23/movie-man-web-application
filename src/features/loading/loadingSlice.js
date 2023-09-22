@@ -10,9 +10,9 @@ export const loadingSlice = createSlice({
   reducers: {
     setLoading: (state, action) => {
       if (action.payload === true) {
-        state.isLoading = false;
-      } else {
         state.isLoading = true;
+      } else {
+        state.isLoading = false;
       }
     },
   },

@@ -2,7 +2,6 @@ import { Link } from "react-router-dom";
 import Card from "./Card";
 
 const ShowAllList = ({ results, text, handleClick }) => {
-  console.log(results);
   return (
     <div className="mt-8">
       {results && results ? (

@@ -4,6 +4,8 @@ import { useLoaderData } from "react-router-dom";
 import { fetchDataFromEndPoints } from "../helper";
 import { END_POINTS } from "../endpoints";
 import ShowAllList from "../components/ShowAllList";
+import { store } from "../app/store";
+import { setLoading } from "../features/loading/loadingSlice";
 
 const PopularTvShows = () => {
   const { data } = useLoaderData();
@@ -40,8 +42,18 @@ const PopularTvShows = () => {
 export default PopularTvShows;
 
 export async function popularTvShowsLoader() {
-  const data = await fetchDataFromEndPoints(
-    END_POINTS.getDifferentCateMovies("tv", "popular", 1)
-  );
+  let data;
+  try {
+    store.dispatch(setLoading(true));
+    data = await fetchDataFromEndPoints(
+      END_POINTS.getDifferentCateMovies("tv", "popular", 1)
+    );
+  } catch (e) {
+    store.dispatch(setLoading(true));
+
+    console.error(e);
+  } finally {
+    store.dispatch(setLoading(false));
+  }
   return { data };
 }

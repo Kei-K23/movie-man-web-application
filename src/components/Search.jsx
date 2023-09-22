@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { replaceSpaceWithPercentSign, search } from "../helper";
+import { search } from "../helper";
 import { Link } from "react-router-dom";
 
 const Search = () => {
@@ -8,7 +8,6 @@ const Search = () => {
 
   const handleChange = async (e) => {
     const w = e.target.value;
-    console.log(w);
     setKeyword("");
     setResults([]);
     if (w === "") {
@@ -17,7 +16,7 @@ const Search = () => {
       return;
     }
     setKeyword(w);
-    const searchKeyWord = replaceSpaceWithPercentSign(w);
+    const searchKeyWord = encodeURIComponent(w);
     const data = await search(searchKeyWord);
     setResults((prev) => {
       return [...prev, ...data];
