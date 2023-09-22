@@ -2,6 +2,8 @@ import { useLoaderData } from "react-router-dom";
 import { fetchDataFromEndPoints } from "../helper";
 import SwiperCardSlides from "../components/SwiperCardSlides";
 import { END_POINTS } from "../endpoints";
+import { store } from "../app/store.js";
+import { setLoading } from "../features/loading/loadingSlice";
 const Detail = () => {
   const { detail, trailerVideos, recommendations, similar, credits } =
     useLoaderData();
@@ -12,7 +14,6 @@ const Detail = () => {
   };
   let casts = [];
   casts = credits.cast.length > 19 ? credits.cast.slice(0, 19) : credits.cast;
-  console.log(casts);
   return (
     <div>
       <div className="w-full h-[full] lg:h-[500px] relative">
@@ -122,22 +123,31 @@ const Detail = () => {
 };
 
 export default Detail;
-
 export async function movieDetailLoader({ params }) {
-  const detail = await fetchDataFromEndPoints(
-    END_POINTS.getDetail("movie", params.id)
-  );
-  const trailerVideos = await fetchDataFromEndPoints(
-    END_POINTS.getTrailerVideo("movie", params.id)
-  );
-  const recommendations = await fetchDataFromEndPoints(
-    END_POINTS.getRecommendations("movie", params.id)
-  );
-  const similar = await fetchDataFromEndPoints(
-    END_POINTS.getSimilar("movie", params.id)
-  );
-  const credits = await fetchDataFromEndPoints(
-    END_POINTS.getCredits("movie", params.id)
-  );
+  let detail, trailerVideos, recommendations, similar, credits;
+  try {
+    store.dispatch(setLoading(true));
+
+    detail = await fetchDataFromEndPoints(
+      END_POINTS.getDetail("movie", params.id)
+    );
+    trailerVideos = await fetchDataFromEndPoints(
+      END_POINTS.getTrailerVideo("movie", params.id)
+    );
+    recommendations = await fetchDataFromEndPoints(
+      END_POINTS.getRecommendations("movie", params.id)
+    );
+    similar = await fetchDataFromEndPoints(
+      END_POINTS.getSimilar("movie", params.id)
+    );
+    credits = await fetchDataFromEndPoints(
+      END_POINTS.getCredits("movie", params.id)
+    );
+  } catch (e) {
+    store.dispatch(setLoading(true));
+    console.error(e);
+  } finally {
+    store.dispatch(setLoading(false));
+  }
   return { detail, trailerVideos, recommendations, similar, credits };
 }

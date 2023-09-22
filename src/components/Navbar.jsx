@@ -1,9 +1,13 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
+import Lottie from "react-lottie-player";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import animationJSON from "../animations/animation1.json";
 
 const Navbar = () => {
   const [show, setShow] = useState(false);
-  const [windowWidth, setWindowWidth] = useState(0);
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const isLoading = useSelector((state) => state.isLoading);
   const openRef = useRef();
   const closeRef = useRef();
   const handleClick = () => {
@@ -27,13 +31,13 @@ const Navbar = () => {
       closeRef.current.style.display = "block";
     }
   }
+  useEffect(() => handleWindowResize, []);
 
   // Add an event listener for the window's resize event
   window.addEventListener("resize", handleWindowResize);
-
   return (
     <>
-      <header className="bg-slate-100 w-full page-padding sticky top-0  z-30">
+      <header className="bg-slate-100 w-full page-padding sticky top-0  z-30 ">
         <nav>
           <div className="flex items-center gap-4 lg:gap-10">
             <Link to="/" className="group ">
@@ -133,6 +137,14 @@ const Navbar = () => {
             </ul>
           </div>
         </nav>
+        {isLoading && (
+          <Lottie
+            loop
+            animationData={animationJSON}
+            play
+            className="w-full h-5"
+          />
+        )}
       </header>
       {show && (
         <div

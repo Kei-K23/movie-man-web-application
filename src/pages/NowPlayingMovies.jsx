@@ -4,7 +4,8 @@ import { useLoaderData } from "react-router-dom";
 import { fetchDataFromEndPoints } from "../helper";
 import { END_POINTS } from "../endpoints";
 import ShowAllList from "../components/ShowAllList";
-
+import { store } from "../app/store.js";
+import { setLoading } from "../features/loading/loadingSlice";
 const NowPlayingMovies = () => {
   const { data } = useLoaderData();
 
@@ -40,8 +41,18 @@ const NowPlayingMovies = () => {
 export default NowPlayingMovies;
 
 export async function nowPlayingMoviesLoader() {
-  const data = await fetchDataFromEndPoints(
-    END_POINTS.getDifferentCateMovies("movie", "now_playing", 1)
-  );
+  let data;
+  try {
+    store.dispatch(setLoading(true));
+
+    data = await fetchDataFromEndPoints(
+      END_POINTS.getDifferentCateMovies("movie", "now_playing", 1)
+    );
+  } catch (e) {
+    store.dispatch(setLoading(true));
+    console.error(e);
+  } finally {
+    store.dispatch(setLoading(false));
+  }
   return { data };
 }
