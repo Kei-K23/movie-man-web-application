@@ -4,7 +4,7 @@ import Footer from "../sections/Footer";
 
 const Main = () => {
   return (
-    <div className="font-montserrat">
+    <div className="font-montserrat ">
       <Navbar />
       <main>
         <Outlet />
