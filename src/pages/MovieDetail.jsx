@@ -76,7 +76,7 @@ const Detail = () => {
           {credits.cast && credits.cast.length > 0 ? (
             <SwiperCardSlides movies={casts} />
           ) : (
-            <p>No casts data to show</p>
+            <p className="dark:text-slate-200">No casts data to show</p>
           )}
         </div>
       </section>
@@ -105,7 +105,7 @@ const Detail = () => {
           {recommendations.results && recommendations.results.length > 0 ? (
             <SwiperCardSlides movies={recommendations.results} />
           ) : (
-            <p>No recommendations movies yet</p>
+            <p className="dark:text-slate-200">No recommendations movies yet</p>
           )}
         </div>
       </section>
@@ -120,7 +120,7 @@ const Detail = () => {
           {similar.results && similar.results.length > 0 ? (
             <SwiperCardSlides movies={similar.results} />
           ) : (
-            <p>No similar movies yet</p>
+            <p className="dark:text-slate-200"> No similar movies yet</p>
           )}
         </div>
       </section>

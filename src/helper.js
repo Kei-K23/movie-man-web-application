@@ -11,9 +11,13 @@ const options = {
 };
 
 export async function fetchDataFromEndPoints(url) {
-  const req = await fetch(url, options);
-  const data = await req.json();
-  return data;
+  try {
+    const req = await fetch(url, options);
+    const data = await req.json();
+    return data;
+  } catch (e) {
+    throw new Error(e);
+  }
 }
 
 export async function search(word) {

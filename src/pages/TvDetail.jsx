@@ -87,11 +87,13 @@ const TvDetail = () => {
             </div>
           ))
         ) : (
-          <p>No trailer video for {detail.name}</p>
+          <p className="dark:text-slate-200">
+            No trailer video for {detail.name}
+          </p>
         )}
       </div>
 
-      <section className="page-padding my-10">
+      <section className="page-padding mt-10">
         <div className="flex items-center gap-10 mb-6">
           <h2 className="dark:text-slate-200 text-xl lg:text-2xl font-bold font-robotoSlab">
             Recommendations
