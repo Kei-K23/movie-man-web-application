@@ -15,7 +15,7 @@ const TvDetail = () => {
   };
 
   return (
-    <div>
+    <div className="bg-white dark:bg-slate-900">
       <div className="w-full h-[full] lg:h-[500px] relative">
         <div className="layer lg:h-[500px]"></div>
         <img
@@ -32,23 +32,27 @@ const TvDetail = () => {
             alt={detail.name}
           />
         </div>
-        <div className="shadow-2xl lg:w-1/2 px-8 py-3">
-          <h2 className="text-3xl text-slate-900 font-bold">{detail.name}</h2>
+        <div className="shadow-2xl dark:shadow-slate-800 lg:w-1/2 px-8 py-3">
+          <h2 className="text-3xl text-slate-900 dark:text-slate-200 font-bold">
+            {detail.name}
+          </h2>
           <div>
-            <p className="text-xl text-slate-700">{detail.first_air_date}</p>
-            <p>{detail.status}</p>
-            <p>$ {detail.budget}</p>
+            <p className="text-xl text-slate-700 dark:text-slate-400">
+              {detail.first_air_date}
+            </p>
+            <p className=" dark:text-slate-400">{detail.status}</p>
+            <p className=" dark:text-slate-400">$ {detail.budget}</p>
             <ul className="flex items-center flex-wrap gap-4 my-4">
               {detail.genres.map((genre) => (
                 <li
-                  className="sm-border py-1 px-2 cursor-pointer hover:scale-95 transition-transform"
+                  className="sm-border dark:border-slate-100 dark:text-slate-300 py-1 px-2 cursor-pointer hover:scale-95 transition-transform"
                   key={genre.id}
                 >
                   {genre.name}
                 </li>
               ))}
             </ul>
-            <p>
+            <p className="dark:text-slate-400">
               runtime:{" "}
               <b>
                 {Number.isInteger(calculateRunTime(detail.runtime))
@@ -57,13 +61,15 @@ const TvDetail = () => {
               </b>
             </p>
           </div>
-          <p className="my-2">
+          <p className="my-2 dark:text-slate-200">
             <q className="italic">
               {detail.tagline === "" ? "no tag line" : detail.tagline}
             </q>
           </p>
-          <h2 className="text-slate-800 font-medium text-lg">Overview</h2>
-          <p className="lg:text-lg">{detail.overview}</p>
+          <h2 className="text-slate-800 dark:text-slate-400 font-medium text-lg">
+            Overview
+          </h2>
+          <p className="lg:text-lg dark:text-slate-300">{detail.overview}</p>
         </div>
       </div>
 
@@ -87,7 +93,7 @@ const TvDetail = () => {
 
       <section className="page-padding my-10">
         <div className="flex items-center gap-10 mb-6">
-          <h2 className="text-xl lg:text-2xl font-bold font-robotoSlab">
+          <h2 className="dark:text-slate-200 text-xl lg:text-2xl font-bold font-robotoSlab">
             Recommendations
           </h2>
         </div>
@@ -95,7 +101,7 @@ const TvDetail = () => {
           {recommendations.results && recommendations.results.length > 0 ? (
             <SwiperCardSlides movies={recommendations.results} />
           ) : (
-            <p>No recommendations movies yet</p>
+            <p className="dark:text-slate-200">No recommendations movies yet</p>
           )}
         </div>
       </section>

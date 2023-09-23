@@ -31,9 +31,9 @@ const TrendingTVShowsSection = ({ trendingTvData }) => {
   }, []);
 
   return (
-    <section className="page-padding my-10">
+    <section className="page-padding mt-10">
       <div className="flex justify-start flex-col lg:flex-row lg:items-center gap-4 lg:gap-8 mb-6">
-        <h2 className="text-xl lg:text-2xl font-bold font-robotoSlab">
+        <h2 className="dark:text-slate-300 text-xl lg:text-2xl font-bold font-robotoSlab">
           Trending TV Shows
         </h2>
         <SwitchBtn switchTime={switchTime} handleChange={handleChange} />

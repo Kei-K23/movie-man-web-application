@@ -14,12 +14,18 @@ const OnTheAirTvShows = () => {
 
   const handleClick = async () => {
     setCurrentPage((prev) => prev + 1);
-
-    const data = await fetchDataFromEndPoints(
-      END_POINTS.getDifferentCateMovies("tv", "on_the_air", currentPage)
-    );
-
-    setResults([...results, ...data.results]);
+    try {
+      store.dispatch(setLoading(true));
+      const data = await fetchDataFromEndPoints(
+        END_POINTS.getDifferentCateMovies("tv", "on_the_air", currentPage)
+      );
+      setResults([...results, ...data.results]);
+    } catch (e) {
+      store.dispatch(setLoading(true));
+      console.error(e);
+    } finally {
+      store.dispatch(setLoading(false));
+    }
   };
 
   useEffect(() => {
@@ -27,7 +33,7 @@ const OnTheAirTvShows = () => {
   }, []);
 
   return (
-    <div className="page-padding ">
+    <div className="page-padding dark:bg-slate-900">
       <Search />
       <ShowAllList
         results={results}
