@@ -35,7 +35,7 @@ const TrendingMovieSection = ({ trendingMoviesData }) => {
   return (
     <section className="page-padding my-10">
       <div className="flex justify-start flex-col lg:flex-row lg:items-center gap-4 lg:gap-8 mb-6">
-        <h2 className="text-xl lg:text-2xl font-bold font-robotoSlab">
+        <h2 className="text-xl dark:text-slate-200 lg:text-2xl font-bold font-robotoSlab">
           Trending Movies
         </h2>
         <SwitchBtn switchTime={switchTime} handleChange={handleChange} />
@@ -44,7 +44,7 @@ const TrendingMovieSection = ({ trendingMoviesData }) => {
         {trendingMovies.results && trendingMovies.results.length > 0 ? (
           <SwiperCardSlides movies={trendingMovies.results} />
         ) : (
-          <p>No trending movies yet</p>
+          <p className="dark:text-slate-200">No trending movies yet</p>
         )}
       </div>
     </section>

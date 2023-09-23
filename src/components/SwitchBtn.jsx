@@ -1,6 +1,6 @@
 const SwitchBtn = ({ switchTime, handleChange }) => {
   return (
-    <form className="w-1/4 lg:w-[200px] sm-border">
+    <form className="w-1/2 lg:w-[200px] sm-border">
       <select
         value={switchTime}
         onChange={async (e) => await handleChange(e.target.value)}

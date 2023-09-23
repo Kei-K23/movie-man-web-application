@@ -23,13 +23,9 @@ const Search = () => {
     });
   };
 
-  const handleClick = (id) => {
-    console.log(id);
-  };
-
   return (
     <div>
-      <form className=" sm-border lg:h-12 flex justify-between items-center bg-slate-100">
+      <form className=" sm-border lg:h-12 flex justify-between items-center bg-slate-100 ">
         <i className=" fa-solid fa-magnifying-glass ml-3"></i>
         <input
           value={keyword}
@@ -41,7 +37,7 @@ const Search = () => {
           required
         />
       </form>
-      <ul className="w-full max-h-[350px] overflow-auto bg-slate-100 sm-border">
+      <ul className=" w-full max-h-[350px] overflow-auto bg-slate-100 sm-border">
         {results.map((result) => (
           <Link
             to={
@@ -52,9 +48,8 @@ const Search = () => {
             key={result.id}
           >
             <li
-              className="group transition-all my-4 py-2 px-8 bg-slate-200 hover:bg-sky-500 first:mt-0 last:mb-0 flex items-center gap-8 cursor-pointer"
+              className="group transition-all my-4 py-2 px-8 bg-slate-200 dark:bg-slate-700 dark:text-slate-200 hover:bg-sky-500 dark:hover:bg-sky-500  first:mt-0 last:mb-0 flex items-center gap-8 cursor-pointer"
               key={result.id}
-              onClick={() => handleClick(result.id)}
               title="click to view detail"
             >
               <div className="overflow-hidden">
@@ -68,7 +63,7 @@ const Search = () => {
                 <h3 className="group-hover:text-slate-200 font-bold text-sm lg:text-lg">
                   {result.name ?? result.title}
                 </h3>
-                <h3 className="text-slate-700">
+                <h3 className="text-slate-700 dark:text-slate-300">
                   {result.release_date ?? result.first_air_date}
                 </h3>
               </div>

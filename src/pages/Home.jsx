@@ -11,12 +11,12 @@ const Home = () => {
   const { trendingMoviesData, trendingTvData } = useLoaderData();
 
   return (
-    <>
+    <div className="bg-white dark:bg-slate-900">
       <HeroSection />
       <TrendingMovieSection trendingMoviesData={trendingMoviesData} />
       <MovieTrailerSection trendingMoviesData={trendingMoviesData} />
       <TrendingTVShowsSection trendingTvData={trendingTvData} />
-    </>
+    </div>
   );
 };
 

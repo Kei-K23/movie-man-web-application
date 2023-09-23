@@ -42,8 +42,7 @@ export async function search(word) {
     data = [...movieData.results, ...tvData.results];
   } catch (e) {
     store.dispatch(setLoading(true));
-
-    console.log(e);
+    console.error(e);
   } finally {
     store.dispatch(setLoading(false));
   }

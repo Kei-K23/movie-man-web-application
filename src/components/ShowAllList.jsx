@@ -26,7 +26,7 @@ const ShowAllList = ({ results, text, handleClick }) => {
           </div>
           <button
             onClick={handleClick}
-            className="transition-all px-4 py-2 sm-border font-bold m-auto block mt-8 hover:rounded-md active:scale-95"
+            className="dark:border-slate-200 dark:text-slate-200 transition-all px-4 py-2 sm-border font-bold m-auto block mt-8 hover:rounded-md active:scale-95"
           >
             Load More
           </button>
