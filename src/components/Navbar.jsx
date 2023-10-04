@@ -22,6 +22,7 @@ const Navbar = () => {
   };
 
   function handleWindowResize() {
+    closeRef.current.style.display = "none";
     setWindowWidth(window.innerWidth);
     if (windowWidth > 768) {
       setShow(false);
@@ -72,7 +73,7 @@ const Navbar = () => {
               } md:flex items-center gap-4 md:gap-8 lg:gap-12 z-50 transition-all`}
             >
               <li
-                className="absolute top-2 left-4 hover:text-red-400 cursor-pointer"
+                className="hidden absolute top-2 left-4 hover:text-red-400 cursor-pointer"
                 title="close"
                 onClick={handleClick}
                 ref={closeRef}
